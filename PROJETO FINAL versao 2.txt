@@ -1,0 +1,396 @@
+/*projeto final do curso de AP1, Sitema de segurança, Empresa Provaidtec-Domótica
+data criação 23/06/2017*/
+
+#include <stdio.h>
+#include <locale.h>
+#include <string.h>
+#include <windows.h>
+#include <conio.h>
+#include <dos.h>
+
+
+char senha[8] = "123456", cadastro[8] = "123456", nulo[8];
+int tent = 0, tam, op, entPermitida = 0, flag, test, a, n = 0;
+int freq = 3000;
+int tempo = 280;
+
+
+void menu();
+void validarSenha();
+void menuAtivacao();
+void menuDesativacao();
+void menuConfig();
+void cadrastroSenha();
+void alterarSenha();
+void login();
+void alarme();
+void ativarSistem();
+int teste();
+char excluirSenha(char nulo);
+
+
+
+
+int main (void)
+{
+    menu();
+}
+
+void menu(void)
+{
+    setlocale(LC_ALL,"PORTUGUESE");
+    do
+    {
+        printf("\t\t Empresa Provaidtec-Domótica\n");
+        printf("\t1-Ativar\n");
+        printf("\t2-Desativar\n");
+        printf("\t3-Configuções\n");
+        printf("\t4-Teste\n");
+        printf("\t5-Sair\n\n");
+        printf("Digite a opção: ");
+        scanf("%d", &op);
+        while(op<1|| op>5)
+        {
+            printf("Opção inválida, digite novamente: ");
+            scanf("%d", &op);
+        }
+        while(op == 1 || op == 2 || op == 3 || op == 4)
+        {
+            if(op != 4)
+            {
+                system("cls");
+                login();
+            }
+            else
+            {
+                entPermitida == 1;
+            }
+            if(entPermitida == 1)
+            {
+                switch(op)
+                {
+                     case 1:
+                        system("cls");
+                        menuAtivacao();
+                        break;
+                    case 2:
+                        system("cls");
+                        menuDesativacao();
+                        break;
+                    case 3:
+                        system("cls");
+                        menuConfig();
+                        break;
+                    case 4:
+                        system("cls");
+                        teste();
+                        break;
+                }
+            }
+            else
+            {
+                alarme();
+            }
+        }
+    }while(op != 5);
+}
+
+void menuAtivacao()
+{
+    do
+    {
+        printf("\t1-Ativar todos os sistemas\n");
+        printf("\t2-ativar somente sistema interno\n");
+        printf("\t3-ativar somente sistema externo\n");
+        printf("\t4-Sair\n\n");
+        printf("Digite a opção: ");
+        scanf("%d", &op);
+        while(op < 1|| op > 4)
+        {
+            printf("Opção inválida, digite novamente: ");
+            scanf("%d", &op);
+        }
+        switch(op)
+        {
+             case 1:
+                system("cls");
+                ativarSistem();
+                system("cls");
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+        }
+
+    }while(op != 4);
+    system("cls");
+    menu();
+}
+
+void menuDesativacao()
+{
+    do
+    {
+        printf("\t1-Desativar todos os sistemas\n");
+        printf("\t2-Desativar somente sistema interno\n");
+        printf("\t3-Desativar somente sistema externo\n");
+        printf("\t4-Sair\n\n");
+        printf("Digite a opção: ");
+        scanf("%d", &op);
+        while(op < 1|| op > 4)
+        {
+            printf("Opção inválida, digite novamente: ");
+            scanf("%d", &op);
+        }
+        switch(op)
+        {
+             case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+        }
+    }while(op != 4);
+    system("cls");
+    menu();
+}
+
+void menuConfig()
+{
+    do
+    {
+        printf("\t1-Configurar Senha\n");
+        printf("\t2-Configura Hora\n");
+        printf("\t3-Configurar Alarme\n");
+        printf("\t4-Configurar Sensores\n");
+        printf("\t5-Configurar Sistema de Respota\n");
+        printf("\t6-Restaura Configuração Padrão\n");
+        printf("\t7-Sair\n\n");
+        printf("Digite a opção: ");
+        scanf("%d", &op);
+        while(op < 1|| op > 7)
+        {
+            printf("Opção inválida, digite novamente: ");
+            scanf("%d", &op);
+        }
+        switch(op)
+        {
+            case 1:
+                system("cls");
+                cadrastroSenha();
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+            case 6:
+
+                break;
+        }
+    }
+    while(op != 7);
+    system("cls");
+    menu();
+}
+
+void validarSenha()
+{
+    do
+    {
+        printf("1 - Cadastrar senha\n");
+        printf("2 - Excluir senha\n");
+        printf("3 - Sair\n");
+        printf("Digite a opçao desejada\n");
+        scanf("%d", &op);
+        switch(op)
+        {
+            case 1:
+                system("cls");
+                cadrastroSenha();
+                system("cls");
+                break;
+            case 2:
+                system("cls");
+                excluirSenha(nulo);
+                system("cls");
+                break;
+            default:
+                system("cls");
+                printf("Digite uma opcao valida\n\n\n");
+                system("pause");
+                system("cls");
+                break;
+        }
+    }
+    while(op != 3);
+}
+
+void cadrastroSenha()
+{
+    flag = 0;
+    fflush(stdin);
+    printf("Digite a senha com no maximo 8 caracteres: ");
+    scanf("%s", &cadastro);
+    tam = strlen(cadastro);
+    while(tam > 8)
+    {
+        fflush(stdin);
+        printf("Digite a senha com no maximo 8 caracteres: ");
+        scanf("%s", &cadastro);
+    }
+    flag = 1;
+}
+
+void login(void)
+{
+    fflush(stdin);
+    printf("Digite a senha com no maximo 8 caracteres: ");
+    scanf("%s", &senha);
+
+    tam = strlen(senha);
+
+    while(tam > 8)
+    {
+        fflush(stdin);
+        printf("Digite a senha com no maximo 8 caracteres: ");
+        scanf("%s", &senha);
+        system("cls");
+    }
+    while(strcmp(senha,cadastro)!= 0)
+    {
+
+        if(tent < 2)
+        {
+            printf("Senha invalida\n\n");
+            fflush(stdin);
+            printf("Digite a senha com no maximo 8 caracteres: ");
+            scanf("%s", &senha);
+            tent++;
+            system("cls");
+        }
+        else
+        {
+            printf("Senha bloqueada\n");
+
+            break;
+        }
+    }
+    if(strcmp(senha,cadastro) == 0)
+    {
+        printf("\nSeja bem vindo ao sistema\n");
+
+        entPermitida = 1;
+    }
+}
+
+void alarme()
+{
+    int freq = 3000;
+    int tempo = 280;
+    while (freq == 3000)
+    {
+        Beep(1000,tempo);
+        Beep(3500,tempo);
+        Beep(1500,tempo);
+        Beep(4000,tempo);
+    }
+}
+
+void ativarSistem(void)
+{
+
+    int statusSensores = 0;
+    printf("\Deseja ativar o Sistema\n");
+    printf("\t1 - Sim\n");
+    printf("\t2 - Retornar\n");
+    printf ("Opção: ");
+    scanf("%d", &op);
+    if(op == 1)
+    {
+        statusSensores = 1;
+        Beep(1000,1000);
+    }
+    else
+    {
+        system("cls");
+        menu();
+    }
+
+    if(test == 1)
+    {
+        statusSensores = 0;
+        while(statusSensores != 1)
+        {
+            alarme();
+        }
+    }
+    return(1);
+
+}
+int teste(int test)
+{
+    test = 0;
+    printf("Digite o status 1 para ativar: ");
+    scanf("%d", &test);
+
+}
+char excluirSenha(char nulo)
+{
+
+    printf("Digite a senha atual");
+    scanf("%s", senha);
+    tam = strlen(senha);
+    while(tam > 8)
+    {
+        fflush(stdin);
+        printf("Digite a senha com no maximo 8 caracteres: ");
+        scanf("%s", &senha);
+        system("cls");
+    }
+    while(strcmp(senha,cadastro)!= 0)
+    {
+        if(tent < 2)
+        {
+            printf("Senha invalida\n\n");
+            fflush(stdin);
+            printf("Digite a senha com no maximo 8 caracteres: ");
+            scanf("%s", &senha);
+            tent++;
+            system("cls");
+        }
+        else
+        {
+            printf("Senha bloqueada\n");
+            break;
+        }
+    }
+    if(strcmp(senha,cadastro) == 0)
+    {
+	for(cont = 0; cont < 8; cont ++){
+        
+	cadastro[cont] = "0";
+       
+	}
+      printf("senha excluida");
+    }
+
+
+
+
+}
+
