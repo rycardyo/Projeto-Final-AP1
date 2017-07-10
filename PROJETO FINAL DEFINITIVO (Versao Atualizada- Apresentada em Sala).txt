@@ -1,0 +1,964 @@
+/*projeto final do curso de AP1, Sitema de segurança, Empresa Provaidtec-Domótica
+data criação 23/06/2017*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <string.h>
+#include <windows.h>
+#include <conio.h>
+#include <dos.h>
+
+char senha[5] = "1234", cadastro[5] = "1234", nulo[5] = "0000";
+int tent = 0, tam, op, entPermitida = 0, flag, test = 0, a, n = 0,sensores[6], ativos[6];
+int hora = 0,minutos = 0,segundos = 0,tempo1 = 0, dia = 0, mes = 0, ano = 0;
+int freq = 3000, statusSensores = 0, statusGeral = 0, cont = 0, statusInterior = 0, statusExterior = 0;
+int tempo = 280, totalSensores = 6, escolha, parada;
+int alarmeDefinido;
+
+void apresentacao();
+void menu();
+void validarSenha();
+void menuAtivacao();
+void menuDesativacao();
+void menuConfig();
+void cadrastroSenha();
+void alterarSenha();
+void login();
+void alarme();
+void configurarAlarme();
+void escolhaAlarme();
+void escolhaAlarme1();
+void escolharAlarme2();
+void escolhaAlarme3();
+void ativarSistem();
+int teste();
+char excluirSenha(char nulo);
+void ativarInterno();
+void ativarSensores();
+void ativarExterno();
+void desativarExterno();
+void desativarExterno();
+void desativarSistem();
+void restaurarSistema();
+void ajusteHora();
+
+int main (void)
+{
+    apresentacao();
+}
+
+void apresentacao(void)
+{
+    setlocale(LC_ALL,"PORTUGUESE");
+    printf("\n\n");
+    printf("\t\t *******************    *********************\n");
+    printf("\t\t *******************    *********************\n");
+    printf("\t\t *******************    *********************\n");
+    printf("\t\t ****           ****             ****        \n");
+    printf("\t\t ****           ****             ****        \n");
+    printf("\t\t ****           ****             ****        \n");
+    printf("\t\t ****           ****             ****        \n");
+    printf("\t\t *******************             ****        \n");
+    printf("\t\t *******************             ****        \n");
+    printf("\t\t *******************             ****        \n");
+    printf("\t\t ****                            ****        \n");
+    printf("\t\t ****                            ****        \n");
+    printf("\t\t ****                            ****        \n");
+    printf("\t\t ****                            ****        \n");
+    printf("\t\t ****                            ****        @\n\n");
+    printf("\t\tProvaidtec: soluções inteligentes em seguraça");
+    printf("\n\n\n\n\n");
+    system("pause");
+    system("cls");
+    menu();
+}
+
+void menu(void)
+{
+    do
+    {
+        printf("\t\t Empresa Provaidtec-Domótica\n\n");
+
+        printf("\t1-Ativar\n");
+        printf("\t2-Desativar\n");
+        printf("\t3-Configuções\n");
+        printf("\t4-Teste\n");
+        printf("\t5-Sair\n\n");
+        printf("\n\n\tOpção: ");
+        scanf("%d", &op);
+        while(op < 1|| op > 5)
+        {
+            printf("Opção inválida, digite novamente: ");
+            scanf("%d", &op);
+        }
+        while(op == 1 || op == 2 || op == 3 || op == 4)
+        {
+            if(op != 4)
+            {
+                system("cls");
+                login();
+            }
+            else
+            {
+                entPermitida == 1;
+            }
+            if(entPermitida == 1)
+            {
+                switch(op)
+                {
+                     case 1:
+                        system("cls");
+                        menuAtivacao();
+                        system("cls");
+                        break;
+                    case 2:
+                        system("cls");
+                        menuDesativacao();
+                        system("cls");
+                        break;
+                    case 3:
+                        system("cls");
+                        menuConfig();
+                        system("cls");
+                        break;
+                    case 4:
+                        system("cls");
+                        teste();
+                        system("cls");
+                        break;
+                }
+            }
+            else
+            {
+                alarme();
+            }
+        }
+    }while(op != 5);
+}
+
+void menuAtivacao()
+{
+    do
+    {
+        printf("\t\t MENU ATIVAÇÃO\n");
+        printf("\t1-Ativar todo o sistemas\n");
+        printf("\t2-ativar somente sistema interno\n");
+        printf("\t3-ativar somente sistema externo\n");
+        printf("\t4-Sair\n\n");
+        printf("\n\n\tOpção: ");
+        scanf("%d", &op);
+        while(op < 1 || op > 4)
+        {
+            printf("Opção inválida, digite novamente: ");
+            scanf("%d", &op);
+        }
+        switch(op)
+        {
+             case 1:
+                system("cls");
+                ativarSistem();
+                system("cls");
+                break;
+            case 2:
+                system("cls");
+                ativarInterno();
+                system("cls");
+                break;
+            case 3:
+                system("cls");
+                ativarExterno();
+                system("cls");
+                break;
+        }
+    }while(op != 4);
+    system("cls");
+    menu();
+}
+
+void menuDesativacao()
+{
+    do
+    {
+        printf("\t\t MENU DESATIVAÇÃO\n");
+        printf("\t1-Desativar todos os sistemas\n");
+        printf("\t2-Desativar somente sistema interno\n");
+        printf("\t3-Desativar somente sistema externo\n");
+        printf("\t4-Sair\n\n");
+        printf("\n\n\tOpção: ");
+        scanf("%d", &op);
+        while(op < 1|| op > 4)
+        {
+            printf("Opção inválida, digite novamente: ");
+            scanf("%d", &op);
+        }
+        switch(op)
+        {
+             case 1:
+                 system("cls");
+                 desativarSistem();
+                 system("cls");
+                break;
+            case 2:
+                system("cls");
+                desativarInterno();
+                system("cls");
+                break;
+            case 3:
+                system("cls");
+                desativarExterno();
+                system("cls");
+                break;
+        }
+    }while(op != 4);
+    system("cls");
+    menu();
+}
+
+void menuConfig()
+{
+    do
+    {
+        printf("\t\t MENU CONFIGURAÇÃO\n");
+        printf("\t1-Configurar Senha\n");
+        printf("\t2-Configurar Hora\n");
+        printf("\t3-Configurar Alarme\n");
+        printf("\t4-Configurar Sensores\n");
+        printf("\t5-Restaurar Configuração Padrão\n");
+        printf("\t6-Sair\n\n");
+        printf("\n\n\tOpção: ");
+        scanf("%d", &op);
+        while(op < 1|| op > 6)
+        {
+            printf("Opção inválida, digite novamente: ");
+            scanf("%d", &op);
+        }
+        switch(op)
+        {
+            case 1:
+                system("cls");
+                validarSenha();
+                system("cls");
+                break;
+            case 2:
+                system("cls");
+                ajusteHora();
+                system("cls");
+                break;
+            case 3:
+                system("cls");
+                configurarAlarme();
+                system("cls");
+                break;
+            case 4:
+                system("cls");
+                ativarSensores();
+                system("cls");
+                break;
+            case 5:
+                system("cls");
+                restaurarSistema();
+                system("cls");
+                break;
+        }
+    }
+    while(op != 6);
+    system("cls");
+    menu();
+}
+
+void validarSenha()
+{
+    do
+    {
+        printf("\t\t CONFIGURAR SENHA\n");
+        printf("\t1 - Cadastrar Senha\n");
+        printf("\t2 - Excluir Senha\n");
+        printf("\t3 - Sair\n");
+        printf("\n\n\tOpção: ");
+        scanf("%d", &op);
+        switch(op)
+        {
+            case 1:
+                system("cls");
+                cadrastroSenha();
+                system("cls");
+                break;
+            case 2:
+                system("cls");
+                excluirSenha(nulo);
+                system("cls");
+                break;
+        }
+    }
+    while(op != 3);
+}
+
+void cadrastroSenha()
+{
+    flag = 0;
+    fflush(stdin);
+    system("cls");
+    printf("\t\t CADASTRAR SENHA\n");
+    printf("\tDigite uma senha com no maximo 4 caracteres: ");
+    scanf("%s", &cadastro);
+    tam = strlen(cadastro);
+    printf("\tTamanho %d", cadastro);
+
+    while(tam > 5)
+    {
+        fflush(stdin);
+        printf("\tDigite a senha com no maximo 4 caracteres: ");
+        scanf("%s", &cadastro);
+    }
+    printf("\n\nA nova senha foi cadastrada com sucesso\t\n\n");
+    system("pause");
+    flag = 1;
+}
+
+void login(void)
+{
+    if(strcmp(cadastro,nulo)!= 0)
+    {
+        fflush(stdin);
+        printf("\n\tDigite a senha com no maximo 4 caracteres: ");
+        scanf("%s", &senha);
+        tam = strlen(senha);
+        while(tam > 4)
+        {
+            fflush(stdin);
+            printf("\n\tDigite a senha com no maximo 4 caracteres: ");
+            scanf("%s", &senha);
+            system("cls");
+        }
+        while(strcmp(senha,cadastro)!= 0)
+        {
+            if(tent < 2)
+            {
+                printf("\tSenha inválida\n\n");
+                fflush(stdin);
+                printf("Digite a senha com no maximo 4 caracteres: ");
+                scanf("%s", &senha);
+                tent++;
+                system("cls");
+            }
+            else
+            {
+                printf("\tSenha bloqueada\n");
+                escolhaAlarme3();
+                break;
+            }
+        }
+        if(strcmp(senha,cadastro) == 0)
+        {
+            printf("\n\t\tSeja bem vindo ao sistema\n");
+            entPermitida = 1;
+        }
+    }
+    else
+    {
+        printf("\n\t\tSeja bem vindo ao sistema\n");
+        entPermitida = 1;
+    }
+}
+
+void configurarAlarme()
+{
+    int freq = 3000;
+    int tempo = 1000;
+    int cont, op1;
+    int select, escolha;
+    do
+    {
+        cont = 0;
+        printf("\t\t CONFIGURAR ALARME\n");
+        printf("\t1 - Alarme 1 \n");
+        printf("\t2 - Alarme 2 \n");
+        printf("\t3 - Alarme 3 \n");
+        printf("\t4 - Sair ");
+        printf("\n\n\tOpção: ");
+        scanf("%d", &op);
+        while (op < 1 || op > 4)
+        {
+            printf("Digite uma opcao válida: ");
+            scanf("%d", &op);
+        }
+        switch(op)
+        {
+            case 1:
+                cont = 0;
+                while (cont < 2)
+                {
+                    Beep(850,tempo);
+                    Beep(870,tempo);
+                    cont++;
+                }
+                break;
+            case 2:
+                cont = 0;
+                while (cont < 2)
+                {
+                    Beep(980, tempo);
+                    Beep(1000, tempo);
+                    cont ++;
+                }
+                break;
+            case 3:
+                cont = 0;
+                while (cont < 2)
+                {
+                    Beep(1200, tempo);
+                    Beep (790, tempo);
+                    cont ++;
+                }
+                break;
+            case 4:
+                    system("cls");
+                    menuConfig();
+                    system("cls");
+                break;
+        }
+        printf ("\n\n\tDeseja utilizar este Alarme?");
+        printf("\n\t 1- SIM");
+        printf("\n\t 2- NAO");
+
+        printf("\n\tEscolha: ");
+        scanf("%d", &select);
+        while (select< 1 || select > 2)
+        {
+            printf("Digite uma opcao válida: ");
+            scanf("%d", &select);
+        }
+        system("cls");
+        if (select == 1)
+        {
+            escolha = op;
+        }
+            else
+            {
+                system("cls");
+            }
+    }while(select == 2);
+    alarmeDefinido = op;
+}
+void escolhaAlarme1()
+{
+    int freq = 3000;
+    int tempo = 970;
+    while (freq == 3000)
+    {
+        Beep(850,tempo);
+        Beep(870,tempo);
+    }
+}
+void escolhaAlarme2()
+{
+    int freq = 3000;
+    int tempo = 970;
+    while (freq == 3000)
+    {
+        Beep(980, tempo);
+        Beep(1000, tempo);
+    }
+}
+void escolhaAlarme3()
+{
+    int freq = 3000;
+    int tempo = 1000;
+    while (freq == 3000)
+    {
+        Beep(1200, tempo);
+        Beep (790, tempo);
+    }
+}
+
+void escolhaAlarme(){
+    if(alarmeDefinido == 1)
+    {
+        escolhaAlarme1();
+    }
+        else
+        {
+            if( alarmeDefinido == 2)
+            {
+                escolhaAlarme2();
+            }
+                else
+                {
+                    if (alarmeDefinido == 3)
+                    {
+                        escolhaAlarme3();
+                    }
+                        else
+                        {
+                            printf("\n\nNENHUM ALARME FOI CONFIGURADO, VA ATE O MENU PRINCIPAL");
+                            printf("\nCONFIGURACOES\nCONFIGURAR ALARME \nE SELECIONE UM TIPO DE ALARME\n");
+                            system("pause");
+                            system("cls");
+                            menu();
+                        }
+                }
+        }
+        return(alarmeDefinido);
+}
+
+void alarme()
+{
+   escolhaAlarme(alarmeDefinido);
+}
+
+void ativarSistem(void)
+{
+    if(statusGeral != 0)
+    {
+        printf("\t\t ATIVAR GERAL\n");
+        printf("\tDeseja ativar todo o Sistema?\n");
+        printf("\t1 - Sim\n");
+        printf("\t2 - Retornar\n");
+        printf ("Opção: ");
+        scanf("%d", &op);
+        if(op == 1)
+        {
+            statusSensores = 1;
+            Beep(1000,1000);
+            printf("\n\tO sistema geral de alarme foi ativado\n\n\n");
+            system("pause");
+        }
+        else
+        {
+            system("cls");
+            menu();
+        }
+        if(n == 1)
+        {
+            statusSensores = 0;
+            while(statusSensores != 1)
+            {
+                alarme();
+            }
+        }
+    }
+    else
+    {
+        system("cls");
+        printf("\n\tRealize o cadastramento de sensores do seu sistema de segurança\n\n");
+        system("pause");
+        system("cls");
+    }
+}
+
+teste(int test)
+{
+    printf("\t\t MENU TESTE\n");
+    printf("Digite o status 1 para ativar: ");
+    scanf("%d", &test);
+    alarme();
+    return(test);
+}
+
+char excluirSenha(char nulo)
+{
+    int i;
+    if(flag != 0)
+    {
+        printf("\t\t EXCLUIR SENHA\n");
+        printf("\tDigite a senha atual: ");
+        scanf("%s", senha);
+        tam = strlen(senha);
+        while(tam > 4)
+        {
+            fflush(stdin);
+            printf("Digite a senha atual: ");
+            scanf("%s", &senha);
+            system("cls");
+        }
+        while(strcmp(senha,cadastro)!= 0)
+        {
+            if(tent < 2)
+            {
+                printf("\tSenha invalida\n\n");
+                fflush(stdin);
+                printf("Digite a senha com no maximo 4 caracteres: ");
+                scanf("%s", &senha);
+                tent++;
+                system("cls");
+            }
+            else
+            {
+                printf("\tSenha bloqueada\n\n");
+                break;
+            }
+        }
+        if(strcmp(senha,cadastro) == 0)
+        {
+
+            strcpy(cadastro,"0000");
+            strcpy(senha,"0000");
+            printf("\n\n\tA senha foi excluida\n\n\n");
+            system("pause");
+        }
+    }
+    else
+    {
+        printf("\n\n\tSenha ainda nao foi cadastrada\n\n\n");
+        system("pause");
+    }
+    return(nulo);
+
+}
+
+void ativarSensores()
+{
+    int i, j;
+    statusInterior = 0;
+    statusExterior = 0;
+    statusGeral = 0;
+    printf("\t1-CONFIGURAR SENSORES\n");
+    printf("Para cadastrar digite 1 \n");
+    printf("Para não cadastrar digite 0 \n");
+    system("pause");
+    system("cls");
+    for(i = 0; i < 6; i++)
+    {
+        printf("Ativar sensor %d?: ", i + 1);
+        scanf("%d", &sensores[i]);
+        if (sensores[i] != 0)
+        {
+            ativos[i] = i;
+        }
+        while(sensores[i] > 1 || sensores[i] < 0)
+        {
+            printf("\n\nValor digitado incorreto, cadastre o sensor com 1 e desative com 0\n");
+            printf("Ativar sensor %d?\n", i + 1);
+            scanf("%d", &sensores[i]);
+        }
+        if(sensores[i] == 1 )
+        {
+            printf("%d ,", i + 1);
+            printf("Ativado");
+            printf("\n\n");
+        }
+        else
+        {
+            printf("%d ,", i + 1);
+            printf("desativado");
+            printf("\n\n");
+        }
+    }
+    system("cls");
+    for(i = 0; i < 3; i++)
+    {
+        if(sensores[i] == 1)
+        {
+            statusInterior = 1;
+            printf("Sensores internos cadastrados são: ");
+            for(i = 0; i < 3; i++)
+            {
+                if(sensores[i] != 0)
+                {
+                    printf("%d ", ativos[i] + 1);
+                }
+            }
+        }
+    }
+    printf("\n\n");
+    for(i = 3; i < 6; i++)
+    {
+        if(sensores[i] == 1)
+        {
+            statusExterior = 1;
+            printf("Sensores Externos cadastrados são: ");
+            for(i = 3; i < 6; i++)
+            {
+                if(sensores[i] != 0)
+                {
+                    printf("%d ", ativos[i] + 1);
+                }
+            }
+        }
+    }
+    statusGeral = 1;
+    printf("\n\n");
+    system("pause");
+}
+
+void ativarInterno()
+{
+    printf("\t\t ATIVAR INTERNO\n");
+    if(statusInterior != 0)
+    {
+        printf("\tDeseja ativar o sistema interno de alarme?\n");
+        printf("\t1 - Sim\n");
+        printf("\t2 - Retornar\n");
+        printf ("Opção: ");
+        scanf("%d", &op);
+        if(op == 1)
+        {
+            statusSensores = 1;
+            Beep(1000,1000);
+            printf("\nO sistema interno de alarme foi ativado\n");
+            system("pause");
+        }
+        else
+        {
+            system("cls");
+            menu();
+        }
+        if(n == 1)
+        {
+            statusSensores = 0;
+            while(statusSensores != 1)
+            {
+                alarme();
+            }
+        }
+    }
+    else
+    {
+        system("cls");
+        printf("\n\tRealize o cadastramento de sensores do seu sistema de segurança\n\n");
+        system("pause");
+        system("cls");
+        ativarSensores();
+    }
+}
+
+void ativarExterno()
+{
+    printf("\t\t ATIVAR EXTERNO\n");
+    if(statusExterior != 0)
+    {
+        printf("\tDeseja ativar o sistema externo de alarme?\n");
+        printf("\t1 - Sim\n");
+        printf("\t2 - Retornar\n");
+        printf ("Opção: ");
+        scanf("%d", &op);
+        if(op == 1)
+        {
+            statusSensores = 1;
+            Beep(1000,1000);
+            printf("\nO sistema externo de alarme foi ativado\n");
+            system("pause");
+        }
+        else
+        {
+            system("cls");
+            menu();
+        }
+        if(n == 1)
+        {
+            statusSensores = 0;
+            while(statusSensores != 1)
+            {
+                alarme();
+            }
+        }
+    }
+    else
+    {
+        system("cls");
+        printf("\n\tRealize o cadastramento de sensores do seu sistema de segurança\n\n");
+        system("pause");
+        system("cls");
+        ativarSensores();
+    }
+}
+
+void desativarInterno()
+{
+    printf("\t\t DESATIVAR INTERNO\n");
+    if(statusInterior != 0)
+    {
+        printf("\tDeseja desativar o sistema interno de alarme?\n");
+        printf("\t1 - Sim\n");
+        printf("\t2 - Retornar\n");
+        printf ("Opção: ");
+        scanf("%d", &op);
+        if(op == 1)
+        {
+            statusSensores = 0;
+            Beep(1000,1000);
+            printf("\nO sistema interno de alarme foi desativado\n");
+            system("pause");
+        }
+        else
+        {
+            system("cls");
+            menu();
+        }
+    }
+    else
+    {
+        system("cls");
+        printf("\n\tSensores não estão ativos\n");
+        system("pause");
+        system("cls");
+    }
+}
+
+void desativarExterno()
+{
+    printf("\t\t DESATIVAR EXTERNO\n");
+    if(statusExterior != 0)
+    {
+        printf("\tDeseja desativar o sistema externo de alarme?\n");
+        printf("\t1 - Sim\n");
+        printf("\t2 - Retornar\n");
+        printf ("Opção: ");
+        scanf("%d", &op);
+        if(op == 1)
+        {
+            statusSensores = 0;
+            Beep(1000,1000);
+            printf("\nO sistema externo de alarme foi desativado\n");
+            system("pause");
+        }
+        else
+        {
+            system("cls");
+            menu();
+        }
+    }
+    else
+    {
+        system("cls");
+        printf("\n\tSensores não estão ativos\n");
+        system("pause");
+        system("cls");
+    }
+}
+
+void desativarSistem()
+{
+    printf("\t\t DESATIVAR GERAL\n");
+    if(statusGeral != 0)
+    {
+        printf("\tDeseja ativar todo o Sistema?\n");
+        printf("\t1 - Sim\n");
+        printf("\t2 - Retornar\n");
+        printf ("Opção: ");
+        scanf("%d", &op);
+        if(op == 1)
+        {
+            statusSensores = 0;
+            Beep(1000,1000);
+            printf("\nO sistema geral de alarme foi desativado\n");
+            system("pause");
+        }
+        else
+        {
+            system("cls");
+            menu();
+        }
+    }
+    else
+    {
+        system("cls");
+        printf("\n\tSensores não estão ativos\n");
+        system("pause");
+        system("cls");
+    }
+}
+
+void restaurarSistema(void)
+{
+    login();
+    system("cls");
+    printf("\t\t RESTAURAR SISTEMA PADRÃO \n");
+    printf("\n\tTem certeza que deseja restaurar as configuraça\n");
+    printf("\t1 - Sim\n");
+    printf("\t2 - Retornar\n");
+    printf ("Opção: ");
+    scanf("%d", &op);
+    if(op == 1)
+    {
+        statusSensores = 0;
+        strcpy(cadastro,"1234");
+        strcpy(senha,"1234");
+        statusGeral = 0;
+        statusInterior = 0;
+        statusExterior = 0;
+        escolha = 0;
+        Beep(1000,1000);
+        printf("\nO sistema de alarme foi redefinido\n\n\n\n");
+        system("pause");
+    }
+}
+
+void ajusteHora()
+{
+    printf("\t\t CONFIGURAR HORA\n");
+    printf("Digite a hora: ");
+    scanf("%d",&hora);
+    while(hora < 0 || hora > 23)
+    {
+        printf("Digite a hora de 0 a 23: ");
+        scanf("%d",&hora);
+    }
+    printf("\nDigite os minutos: ");
+    scanf("%d",&minutos);
+    while(minutos < 0 || minutos > 59)
+    {
+        printf("\nDigite os minutos de 0 a 59: ");
+        scanf("%d",&minutos);
+    }
+    printf("\nDigite o dia: ");
+    scanf("%d",&dia);
+    while(dia < 1 || dia > 30)
+    {
+        printf("\nDigite o dia de 1 a 30: ");
+        scanf("%d",&dia);
+    }
+    printf("\nDigite o mes: ");
+    scanf("%d",&mes);
+    while(mes < 1 || mes > 12)
+    {
+        printf("\nDigite o mes de 1 a 12: ");
+        scanf("%d",&mes);
+    }
+    printf("\nDigite o ano: ");
+    scanf("%d",&ano);
+    while(ano < 0)
+    {
+        printf("\nDigite o ano maior que 0: ");
+        scanf("%d",&ano);
+    }
+    for(segundos = 0; segundos < 8; segundos++)
+    {
+        if(segundos == 60)
+        {
+            segundos = 0;
+            minutos++;
+        }
+        if( minutos == 60)
+        {
+            minutos = 0;
+            hora++;
+        }
+        if(hora == 24)
+        {
+            hora = 0;
+            dia++;
+        }
+        if( dia == 30)
+        {
+            dia = 0;
+            mes++;
+        }
+        if( mes == 12)
+        {
+            mes = 0;
+            ano++;
+        }
+        if( ano == 3000)
+        {
+            ano = 0;
+            ano++;
+        }
+        for(tempo1 = 0; tempo1 < 1000000000; tempo1++);
+        system("cls");
+        printf("\n\t\t%d:%d:%d\t%d/%d/%d",hora,minutos,segundos,dia, mes, ano);
+    }
+     printf("\n\n\tHora configurada\n\n");
+     system("pause");
+}
